@@ -1,115 +1,84 @@
-# BENCHMARK.DC Frontend
+# ⚡ BENCHMARK.DC — Frontend
 
-Benchmark DC es una Single Page Application (SPA) para evaluar la madurez operativa de un data center. La aplicación guía al usuario a través de una serie de preguntas sobre contexto y operación, y al final entrega un resumen con las respuestas del diagnóstico.
+> **Single Page Application (SPA)** interactiva para la evaluación y diagnóstico de la madurez operativa en Data Centers.
 
-## ¿Qué hace esta app?
+---
 
-La aplicación permite:
+## 📌 ¿De qué trata este proyecto?
 
-- Mostrar una pantalla de inicio con información del diagnóstico.
-- Recopilar respuestas sobre el facility y su contexto.
-- Evaluar distintas dimensiones del data center mediante preguntas tipo escala del 1 al 5.
-- Mostrar el avance del usuario por pasos.
-- Guardar las respuestas en memoria.
-- Mostrar un resumen final con las respuestas elegidas.
-- Reiniciar el diagnóstico desde el inicio.
+**BENCHMARK.DC** es una herramienta web que guía al usuario a través de un cuestionario dinámico para diagnosticar el estado actual de la infraestructura de su Data Center.
 
-## Diseño actual
+A través de **15 preguntas clave**, la aplicación evalúa diferentes dimensiones operativas y entrega un **informe final** con un *score* general y la detección del área con mayor fricción.
 
-El proyecto mantiene una estética tipo benchmark de diagnóstico, con:
+---
 
-- fondo claro y limpio,
-- texto grande y fuerte,
-- esquema minimalista,
-- botones y pills simples,
-- enfoque en legibilidad y flujo del cuestionario.
+## ✨ Características Principales
 
-## Estructura del proyecto
+| Función | Descripción |
+| :--- | :--- |
+| 🎯 **Diagnóstico por Pasos** | Cuestionario interactivo con escala de evaluación del 1 al 5. |
+| 📊 **Análisis en Tiempo Real** | Generación de score global (0-100%) y desglose por dimensión. |
+| 🔍 **Detección de Fricción** | Identifica automáticamente el punto más débil de la operación. |
+| 🌙 **Modo Claro / Oscuro** | Soporte nativo de temas visuales que se guardan en el navegador. |
+| ⚡ **SPA Ligera** | Desarrollado en JavaScript Vanilla, sin dependencias pesadas ni frameworks extra. |
+
+---
+
+## 📁 Estructura del Proyecto
 
 ```text
 S07-26-Team-21-frontend/
 ├── README.md
 └── benchmark_dc_frontend/
-    ├── index.html
-    ├── styles.css
-    ├── script.js
+    ├── index.html        # Estructura semántica base
+    ├── styles.css        # Estilos visuales, temas y diseño responsivo
+    ├── script.js        # Lógica del cuestionario, cálculo de score y renderizado
+    ├── package.json      # Dependencias y scripts de desarrollo
     └── README.md
-```
+🚀 Cómo Ejecutarlo Localmente
+Elige la opción que mejor se adapte a tu entorno:
 
-## Archivos principales
+🔹 Opción 1: Con Vite (Recomendada)
+Requiere tener instalado Node.js.
 
-- `benchmark_dc_frontend/index.html`: estructura base del proyecto.
-- `benchmark_dc_frontend/styles.css`: estilos visuales y diseño general.
-- `benchmark_dc_frontend/script.js`: lógica del cuestionario, navegación y resumen final.
+Bash
+# 1. Ingresa a la carpeta del frontend
+cd benchmark_dc_frontend
 
-## Cómo ejecutarlo localmente
-
-### Opción recomendada: con Vite (`npm run dev`)
-
-Desde la carpeta del proyecto:
-
-```bash
-cd /workspaces/S07-26-Team-21-frontend/benchmark_dc_frontend
+# 2. Instala las dependencias
 npm install
+
+# 3. Inicia el servidor de desarrollo
 npm run dev
-```
+🌐 La app se abrirá en http://localhost:5173
 
-La aplicación quedará disponible en:
+🔹 Opción 2: Con servidor simple de Python
+Si prefieres no usar npm, puedes levantar un servidor HTTP estático:
 
-```text
-http://localhost:5173
-```
-
-### Opción alternativa: servidor simple de Python
-
-```bash
-cd /workspaces/S07-26-Team-21-frontend/benchmark_dc_frontend
+Bash
+cd benchmark_dc_frontend
 python3 -m http.server 8000
-```
+🌐 Abre tu navegador en http://localhost:8000
 
-Y luego abre:
+⚙️ Requisitos
+Node.js (v18 o superior) y npm
 
-```text
-http://localhost:8000
-```
+Navegador web moderno (Chrome, Firefox, Edge, Safari)
 
-## Requisitos
+Python 3 (opcional, solo para la Opción 2)
 
-- Node.js y npm instalados
-- Navegador moderno
-- Python 3 (opcional, si usas el servidor simple)
-- Internet opcional, si deseas usar fuentes externas
+🔄 Flujo de Uso
+Plaintext
+[Inicio] ──> [Aceptar Anonimato] ──> [Cuestionario 15 Pasos] ──> [Resumen de Score & Fricción]
+Inicio: Explicación general y tiempo estimado.
 
-## Cómo funciona el flujo
+Evaluación: Selección de escala (1 al 5) con retroalimentación visual inmediata.
 
-1. La app carga la pantalla de inicio.
-2. El usuario acepta participar.
-3. Comienza el diagnóstico con preguntas de contexto.
-4. Se muestran las preguntas de evaluación por pasos.
-5. El usuario selecciona su respuesta y avanza.
-6. Al terminar, aparece la pantalla final con un resumen de las respuestas.
+Resultados: Vista tipo Dashboard con gráfico de anillo, desglose por categorías y lista de respuestas.
 
-## Observación
+🛠️ Mantenimiento y Verificación
+Para comprobar que el archivo JavaScript no tenga errores de sintaxis:
 
-Este frontend es una versión funcional de benchmark y prototipo visual. La lógica está lista para continuar creciendo con backend, cálculo de score real, recomendaciones personalizadas y dashboard más avanzado.
-
-## Comandos útiles
-
-```bash
-cd /workspaces/S07-26-Team-21-frontend/benchmark_dc_frontend
-npm install
-npm run dev
-```
-
-Y para verificar la sintaxis JavaScript:
-
-```bash
+Bash
 node --check script.js
-```
-
-## Estado actual
-
-- Frontend funcional
-- Navegación entre pasos correcta
-- Diseño adaptado a la estructura de las capturas
-- Ejecutable localmente con servidor simple
+💡 Este frontend es una versión funcional tipo prototipo/benchmark, lista para ser integrada con APIs backend de cálculo avanzado o exportación de reportes.
