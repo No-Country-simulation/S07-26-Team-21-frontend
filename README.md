@@ -24,7 +24,6 @@ A través de **15 preguntas clave**, la aplicación analiza distintas dimensione
 
 ## 📁 Estructura del Proyecto
 
-```text
 S07-26-Team-21-frontend/
 ├── README.md
 └── benchmark_dc_frontend/
@@ -33,7 +32,14 @@ S07-26-Team-21-frontend/
     ├── script.js         # Lógica del cuestionario, cálculo de score y renderizado
     ├── package.json      # Dependencias y scripts de desarrollo
     └── README.md
-🚀 Cómo Ejecutarlo LocalmenteElige la opción que mejor se adapte a tu entorno de trabajo:🔹 Opción 1: Con Vite (Recomendada)Requisito: Tener instalado Node.js (v18 o superior).Bash# 1. Ingresa a la carpeta del proyecto
+
+## 🚀 Cómo Ejecutarlo Localmente
+Elige la opción que mejor se adapte a tu entorno de trabajo:
+
+##🔹 Opción 1: Con Vite (Recomendada)
+Requisito: Tener instalado Node.js (v18 o superior).
+
+# 1. Ingresa a la carpeta del proyecto
 cd benchmark_dc_frontend
 
 # 2. Instala las dependencias
@@ -41,16 +47,44 @@ npm install
 
 # 3. Inicia el servidor de desarrollo
 npm run dev
-🌐 La app se abrirá en http://localhost:5173🔹 Opción 2: Con Servidor Simple de PythonIdeal para pruebas rápidas sin usar Node.js.Bash# 1. Ingresa a la carpeta del proyecto
+
+🌐 La app se abrirá en http://localhost:5173
+
+##🔹 Opción 2: Con Servidor Simple de Python
+Ideal para pruebas rápidas sin usar Node.js.
+
+# 1. Ingresa a la carpeta del proyecto
 cd benchmark_dc_frontend
 
 # 2. Levanta el servidor local
 python3 -m http.server 8000
-🌐 Abre en tu navegador: http://localhost:8000⚙️ RequisitosNode.js (v18+) y npmNavegador web moderno (Chrome, Firefox, Edge, Safari)Python 3 (opcional, solo para la opción 2)🔄 Flujo de NavegaciónPlaintext[Inicio] ➔ [Aceptar Anonimato] ➔ [Cuestionario 15 Pasos] ➔ [Resumen de Score & Fricción]
-Inicio: Presentación de los objetivos y tiempo estimado.Evaluación: Selección de respuesta (1 al 5) con actualización de progreso en tiempo real.Resultados: Vista tipo Dashboard con gráfico de anillo, resumen porcentual y desglose detallado.🛠️ Verificación y SintaxisPara comprobar que el código JavaScript no tenga errores antes de subir cambios:Bashnode --check script.js
-💡 Nota: Este frontend es una versión funcional tipo prototipo/benchmark, lista para ser integrada con APIs backend de cálculo avanzado o exportación de reportes.
-### 🛠️ ¿Qué se arregló?
-1. **Cierre de bloques de código (` ``` `):** Se cerró el bloque de la estructura del proyecto para evitar que devore el resto del texto.
-2. **Resaltado de sintaxis correcto:** Se aplicaron sintaxis correctas a los comandos (`bash` y `text`).
-3. **Encabezados claros (`###`):** Se crearon subsecciones para que los comandos de ejecuciones locales destaquen y no se mezclen con el texto.
-4. **Separadores (`---`):** Se añadieron líneas divisorias entre cada sección para darle una estructura más ordenada y fácil de leer.
+
+🌐 Abre en tu navegador: http://localhost:8000
+
+## ⚙️ Requisitos
+Node.js (v18+) y npm
+
+Navegador web moderno (Chrome, Firefox, Edge, Safari)
+
+Python 3 (opcional, solo para la opción 2)
+
+## 🔄 Flujo de Navegación
+
+[Inicio] ➔ [Aceptar Anonimato] ➔ [Cuestionario 15 Pasos] ➔ [Resumen de Score & Fricción]
+
+Inicio: Presentación de los objetivos y tiempo estimado.
+
+Evaluación: Selección de respuesta (1 al 5) con actualización de progreso en tiempo real.
+
+Resultados: Vista tipo Dashboard con gráfico de anillo, resumen porcentual y desglose detallado.
+
+## 🛠️ Verificación y Sintaxis
+Para comprobar que el código JavaScript no tenga errores antes de subir cambios:
+
+node --check script.js
+
+### 📋 Pasos en GitHub:
+1. En el editor de GitHub haz clic adentro, presiona `Ctrl + A` (o `Cmd + A`) y luego `Borrar`.
+2. Copia todo el bloque de arriba (usa el botón de **Copiar** del recuadro).
+3. Pégalo en el editor de GitHub.
+4. Presiona la pestaña **Preview** arriba para confirmar que todo cambió de gris a blanco correctamente.
