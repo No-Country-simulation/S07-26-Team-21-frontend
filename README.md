@@ -1,46 +1,115 @@
-# ⚡ BENCHMARK.DC — Frontend
+# BENCHMARK.DC Frontend
 
-![Version](https://img.shields.io/badge/version-1.0.0-22d3ee?style=for-the-badge)
-![UI](https://img.shields.io/badge/UI-Dark_Mode-34d399?style=for-the-badge)
-![JS](https://img.shields.io/badge/JavaScript-Vanilla-f59e0b?style=for-the-badge)
+Benchmark DC es una Single Page Application (SPA) para evaluar la madurez operativa de un data center. La aplicación guía al usuario a través de una serie de preguntas sobre contexto y operación, y al final entrega un resumen con las respuestas del diagnóstico.
 
-Una Single Page Application (SPA) interactiva diseñada para evaluar la madurez de Data Centers mediante un cuestionario por pasos y la generación instantánea de un dashboard técnico.
+## ¿Qué hace esta app?
 
----
+La aplicación permite:
 
-## 📸 Funcionalidades de la Aplicación
+- Mostrar una pantalla de inicio con información del diagnóstico.
+- Recopilar respuestas sobre el facility y su contexto.
+- Evaluar distintas dimensiones del data center mediante preguntas tipo escala del 1 al 5.
+- Mostrar el avance del usuario por pasos.
+- Guardar las respuestas en memoria.
+- Mostrar un resumen final con las respuestas elegidas.
+- Reiniciar el diagnóstico desde el inicio.
 
-La aplicación web guía al usuario a través de un flujo interactivo y dinámico:
+## Diseño actual
 
-### 1. Formulario Interactivo por Pasos (SPA)
-* **Barra de Progreso Segmentada:** Indicador visual superior divididos en 14 segmentos que se actualiza en tiempo real según el avance.
-* **Selección Inteligente:**
-  * **Opciones Contextuales (Pills):** Selección intuitiva de datos de contexto (tamaño, tipo de facility y región).
-  * **Escala Numérica (1 a 5):** Botones con feedback visual que muestran una descripción detallada según la puntuación elegida.
-* **Navegación Fluida:** Botones de navegación con validación para impedir avanzar si no se ha seleccionado una respuesta.
+El proyecto mantiene una estética tipo benchmark de diagnóstico, con:
 
-### 2. Dashboard de Resultados Dinámico
-* **Gráfico de Arco (Gauge SVG):** Muestra el percentil general del facility con un gradiente multicolor dinámico.
-* **Métrica Destacada:** Tarjeta de resumen con el PUE estimado comparado contra el promedio global de la industria.
-* **Barras de Dimensiones:** Desglose visual de las 5 áreas clave con barras de progreso animadas.
-* **Detección Automática de Cuellos de Botella:** Al finalizar, el código calcula dinámicamente el área con menor puntuación y la resalta con una alerta visual de advertencia.
-* **Modo Demo / Reinicio:** Botón para reiniciar el cuestionario y limpiar los estados seleccionados.
+- fondo claro y limpio,
+- texto grande y fuerte,
+- esquema minimalista,
+- botones y pills simples,
+- enfoque en legibilidad y flujo del cuestionario.
 
----
-
-## 🛠️ Stack Tecnológico
-
-* **HTML5:** Estructura semántica accesible para Single Page Application.
-* **CSS3:** Estilos en *Dark Mode Industrial*, variables CSS, layout con Flexbox/Grid y animaciones fluidas para barras y gráficos.
-* **Vanilla JavaScript (ES6+):** Lógica client-side nativa para renderizado dinámico del DOM, gestión del estado de respuestas y cálculo de percentiles (sin frameworks ni dependencias externas).
-
----
-
-## 📁 Estructura del Proyecto
+## Estructura del proyecto
 
 ```text
-frontend/
-├── index.html     # Contenedor principal de la SPA y layout
-├── styles.css     # Estilos globales, paleta Dark Mode y componentes
-├── script.js     # Motor de renderizado, preguntas P1-P15 y dashboard
-└── README.md      # Documentación del proyecto
+S07-26-Team-21-frontend/
+├── README.md
+└── benchmark_dc_frontend/
+    ├── index.html
+    ├── styles.css
+    ├── script.js
+    └── README.md
+```
+
+## Archivos principales
+
+- `benchmark_dc_frontend/index.html`: estructura base del proyecto.
+- `benchmark_dc_frontend/styles.css`: estilos visuales y diseño general.
+- `benchmark_dc_frontend/script.js`: lógica del cuestionario, navegación y resumen final.
+
+## Cómo ejecutarlo localmente
+
+### Opción recomendada: con Vite (`npm run dev`)
+
+Desde la carpeta del proyecto:
+
+```bash
+cd /workspaces/S07-26-Team-21-frontend/benchmark_dc_frontend
+npm install
+npm run dev
+```
+
+La aplicación quedará disponible en:
+
+```text
+http://localhost:5173
+```
+
+### Opción alternativa: servidor simple de Python
+
+```bash
+cd /workspaces/S07-26-Team-21-frontend/benchmark_dc_frontend
+python3 -m http.server 8000
+```
+
+Y luego abre:
+
+```text
+http://localhost:8000
+```
+
+## Requisitos
+
+- Node.js y npm instalados
+- Navegador moderno
+- Python 3 (opcional, si usas el servidor simple)
+- Internet opcional, si deseas usar fuentes externas
+
+## Cómo funciona el flujo
+
+1. La app carga la pantalla de inicio.
+2. El usuario acepta participar.
+3. Comienza el diagnóstico con preguntas de contexto.
+4. Se muestran las preguntas de evaluación por pasos.
+5. El usuario selecciona su respuesta y avanza.
+6. Al terminar, aparece la pantalla final con un resumen de las respuestas.
+
+## Observación
+
+Este frontend es una versión funcional de benchmark y prototipo visual. La lógica está lista para continuar creciendo con backend, cálculo de score real, recomendaciones personalizadas y dashboard más avanzado.
+
+## Comandos útiles
+
+```bash
+cd /workspaces/S07-26-Team-21-frontend/benchmark_dc_frontend
+npm install
+npm run dev
+```
+
+Y para verificar la sintaxis JavaScript:
+
+```bash
+node --check script.js
+```
+
+## Estado actual
+
+- Frontend funcional
+- Navegación entre pasos correcta
+- Diseño adaptado a la estructura de las capturas
+- Ejecutable localmente con servidor simple

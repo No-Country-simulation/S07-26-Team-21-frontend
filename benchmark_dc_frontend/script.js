@@ -1,219 +1,144 @@
-// DEFINICIÓN DEL CUESTIONARIO (14 PASOS / 15 PREGUNTAS)
 const stepsData = [
-  {
-    type: 'context',
-    category: 'CONTEXTO',
-    question: '¿Cuál es el tamaño de tu facility?',
-    key: 'facilitySize',
-    options: ['Pequeño', 'Mediano', 'Grande', 'Hyperscale']
-  },
-  {
-    type: 'context',
-    category: 'CONTEXTO',
-    question: '¿Qué tipo de facility operan?',
-    key: 'facilityType',
-    options: ['Enterprise', 'Colocation', 'Hyperscale', 'Edge']
-  },
-  {
-    type: 'context',
-    category: 'CONTEXTO',
-    question: '¿En qué región está ubicado?',
-    key: 'region',
-    options: ['Norteamérica', 'LatAm', 'Europa', 'Asia-Pacífico', 'Otro']
-  },
-  {
-    type: 'scale',
-    category: 'VISIBILIDAD CROSS-LAYER',
-    question: '¿Qué tan unificada es la vista que tienen de energía, cooling y workloads?',
-    key: 'P2',
-    descriptions: {
-      1: 'Silos absolutos: cada capa tiene su herramienta aislada.',
-      2: 'Tenemos reportes separados que a veces cruzamos manualmente.',
-      3: 'Dashboards parciales con integración básica entre 2 capas.',
-      4: 'Vista centralizada en tiempo real para las 3 capas.',
-      5: 'Plataforma unificada avanzada con analítica predictiva cross-layer.'
-    }
-  },
-  {
-    type: 'scale',
-    category: 'ATRIBUCIÓN DE FRICCIÓN',
-    question: '¿Qué tan claro tienen dónde pierden más capacidad entre capas?',
-    key: 'P4',
-    descriptions: {
-      1: 'Sin visibilidad: no sabemos por qué se pierde capacidad.',
-      2: 'Tenemos una intuición basada en experiencia, sin datos.',
-      3: 'Identificamos pérdidas después de análisis post-mortem.',
-      4: 'Medición periódica con atribución clara de causas.',
-      5: 'Cuantificación exacta e instantánea de fricción por capa.'
-    }
-  },
-  {
-    type: 'scale',
-    category: 'LATENCIA DE COORDINACIÓN',
-    question: '¿Cuánto tarda la coordinación manual para aprovisionar nueva capacidad?',
-    key: 'P6',
-    descriptions: {
-      1: 'Semanas (2-4 semanas de coordinación entre equipos).',
-      2: 'Días (2-7 días de trámites y aprobaciones).',
-      3: 'Horas (12-24 horas con procesos estandarizados).',
-      4: 'Pocas horas (2-4 horas semi-automatizado).',
-      5: 'Minutos (< 30 minutos con automatización de punta a punta).'
-    }
-  },
-  {
-    type: 'scale',
-    category: 'AUTO-CUANTIFICACIÓN',
-    question: '¿Qué tan precisa es la medición de su PUE (Power Usage Effectiveness)?',
-    key: 'P9',
-    descriptions: {
-      1: 'No calculamos PUE regularmente.',
-      2: 'Estimación anual o global basada en facturas eléctricas.',
-      3: 'Cálculo mensual manual con mediciones de sub-medidores.',
-      4: 'Medición PUE automatizada en tiempo real a nivel facility.',
-      5: 'PUE dinámico continuo granular por sala y por rack.'
-    }
-  },
-  {
-    type: 'scale',
-    category: 'AUTO-CUANTIFICACIÓN',
-    question: '¿Conocen con exactitud su utilización real vs capacidad stranded?',
-    key: 'P10',
-    descriptions: {
-      1: 'Desconocemos la capacidad perdida exacta.',
-      2: 'Estimado vago basado en capacidad instalada nominal.',
-      3: 'Auditorías periódicas de inventario físico y carga.',
-      4: 'Monitoreo en tiempo real de capacidad usada vs reservada.',
-      5: 'Visibilidad total e instantánea de stranded capacity exacta.'
-    }
-  },
-  {
-    type: 'scale',
-    category: 'BLOQUEANTES OPERATIVOS',
-    question: '¿Cuentan con suficiente personal calificado para la operación?',
-    key: 'P11',
-    descriptions: {
-      1: 'Déficit severo de personal capacitado.',
-      2: 'Falta de expertise en integración cross-layer.',
-      3: 'Equipo básico suficiente para operación estándar.',
-      4: 'Personal capacitado en la mayoría de tecnologías.',
-      5: 'Equipo altamente especializado y multidisciplinario.'
-    }
-  },
-  {
-    type: 'scale',
-    category: 'BLOQUEANTES OPERATIVOS',
-    question: '¿Qué nivel de retrasos enfrentan en la cadena de suministro?',
-    key: 'P12',
-    descriptions: {
-      1: 'Retrasos críticos que paralizan expansiones (> 6 meses).',
-      2: 'Retrasos frecuentes en componentes clave.',
-      3: 'Impacto moderado gestionable con stock.',
-      4: 'Mínimos retrasos sin impacto directo.',
-      5: 'Cadena de suministro optimizada e integrada.'
-    }
-  },
-  {
-    type: 'scale',
-    category: 'BLOQUEANTES DE INFRAESTRUCTURA',
-    question: '¿Existen restricciones severas en la red eléctrica o potencia contratada?',
-    key: 'P13',
-    descriptions: {
-      1: 'Límite de potencia alcanzado sin opción de expansión.',
-      2: 'Frecuentes restricciones o alta volatilidad de red.',
-      3: 'Restricciones moderadas en horas pico.',
-      4: 'Suministro estable con pequeña holgura de crecimiento.',
-      5: 'Sin restricciones de potencia y con respaldo redundante.'
-    }
-  },
-  {
-    type: 'scale',
-    category: 'BLOQUEANTES REGULATORIOS',
-    question: '¿Cómo afectan las regulaciones locales/ambientales la operación?',
-    key: 'P14',
-    descriptions: {
-      1: 'Barreras regulatorias severas que limitan eficiencia.',
-      2: 'Cumplimiento complejo que desacelera cambios.',
-      3: 'Impacto estándar gestionado por legal/ops.',
-      4: 'Facilidad de cumplimiento con normativas locales.',
-      5: 'Alineación total proactiva con estándares internacionales.'
-    }
-  },
-  {
-    type: 'scale',
-    category: 'EXPERTISE INTERNA',
-    question: '¿Tienen la expertise interna para ejecutar proyectos de optimización?',
-    key: 'P15',
-    descriptions: {
-      1: 'Dependencia 100% de consultores externos.',
-      2: 'Conocimiento interno limitado para proyectos complejos.',
-      3: 'Capacidad interna para mantenimiento y pequeñas mejoras.',
-      4: 'Equipo competente con capacidad de innovación.',
-      5: 'Líderes en la industria con capacidad R&D propia.'
-    }
-  }
+  { type: 'scale', category: 'VISIBILIDAD CROSS-LAYER', question: '¿Tienes herramientas para monitorear energía, cooling y workloads?', key: 'P1', descriptions: { 1: 'No tenemos herramientas de monitoreo; todo se revisa manualmente o no se revisa.', 2: 'Tenemos herramientas básicas solo para una de las capas (ej. solo energía).', 3: 'Monitoreamos 2 de las 3 capas con herramientas independientes.', 4: 'Monitoreamos las 3 capas, pero con herramientas separadas y sin integración.', 5: 'Monitoreamos energía, cooling y workloads con herramientas integradas en tiempo real.' } },
+  { type: 'scale', category: 'VISIBILIDAD CROSS-LAYER', question: '¿Tienes dashboards que unifiquen las 3 capas?', key: 'P2', descriptions: { 1: 'No tenemos dashboards; los datos se consultan manualmente si es necesario.', 2: 'Tenemos dashboards básicos para una sola capa.', 3: 'Tenemos dashboards separados para cada capa, sin correlación entre ellos.', 4: 'Tenemos dashboards que combinan 2 capas con cierta correlación.', 5: 'Tenemos un dashboard unificado que correlaciona energía, cooling y workloads en tiempo real.' } },
+  { type: 'scale', category: 'VISIBILIDAD CROSS-LAYER', question: '¿Qué tan detallada es tu telemetría?', key: 'P3', descriptions: { 1: 'No recopilamos datos de telemetría.', 2: 'Recopilamos métricas básicas (ej. temperatura ambiente, consumo total) con poca frecuencia.', 3: 'Telemetría moderada: métricas clave por zona con actualizaciones periódicas.', 4: 'Telemetría detallada por rack/equipo con actualizaciones cada pocos minutos.', 5: 'Telemetría granular a nivel de servidor/componente con datos en tiempo real e incluye Scope 1-2-3.' } },
+  { type: 'scale', category: 'ATRIBUCIÓN DE FRICCIÓN', question: '¿Qué tan sincronizados están energía y workload?', key: 'P4', descriptions: { 1: 'No hay coordinación; energía y workloads operan de forma totalmente independiente.', 2: 'Coordinación mínima; se ajusta energía solo en emergencias o fallas.', 3: 'Coordinación reactiva; se hacen ajustes de energía después de que cambian los workloads.', 4: 'Coordinación proactiva; energía se ajusta anticipándose a cambios de carga planificados.', 5: 'Sincronización en tiempo real; el sistema de energía se adapta automáticamente a la demanda de workloads.' } },
+  { type: 'scale', category: 'ATRIBUCIÓN DE FRICCIÓN', question: '¿Qué tan sincronizados están cooling y workload?', key: 'P5', descriptions: { 1: 'No hay coordinación; el cooling opera con configuración fija sin importar la carga.', 2: 'Coordinación mínima; se ajusta cooling solo ante alertas de temperatura crítica.', 3: 'Coordinación reactiva; se ajusta cooling después de detectar cambios térmicos.', 4: 'Coordinación proactiva; cooling se pre-ajusta según la carga esperada.', 5: 'Sincronización en tiempo real; el cooling se adapta dinámicamente a la carga térmica real de los workloads.' } },
+  { type: 'scale', category: 'LATENCIA DE COORDINACIÓN', question: '¿Cuánto tarda la coordinación MANUAL entre teams?', key: 'P6', descriptions: { 1: 'Semanas: requiere reuniones, aprobaciones y tickets entre múltiples equipos.', 2: 'Días: hay procesos definidos pero lentos, con dependencias entre equipos.', 3: 'Horas: los equipos se comunican el mismo día, pero con fricción en la coordinación.', 4: 'Menos de una hora: hay canales directos y procesos ágiles entre equipos.', 5: 'Minutos: los equipos están co-ubicados o tienen protocolos de respuesta inmediata.' } },
+  { type: 'scale', category: 'LATENCIA DE COORDINACIÓN', question: '¿Tienes semi-automatización?', key: 'P7', descriptions: { 1: 'Todo es 100% manual; no hay automatización en ningún proceso operativo.', 2: 'Automatización mínima; solo alertas automáticas, las acciones son manuales.', 3: 'Algunos procesos tienen scripts o runbooks semi-automáticos que requieren aprobación manual.', 4: 'La mayoría de procesos rutinarios están semi-automatizados con supervisión humana.', 5: 'Automatización avanzada con intervención humana solo para decisiones críticas o excepciones.' } },
+  { type: 'scale', category: 'LATENCIA DE COORDINACIÓN', question: '¿Tienes automatización completa?', key: 'P8', descriptions: { 1: 'No hay automatización completa en ningún proceso.', 2: 'Solo tareas triviales están automatizadas (ej. backups, rotación de logs).', 3: 'Algunos flujos de provisioning o scaling tienen automatización end-to-end.', 4: 'La mayoría de operaciones rutinarias están completamente automatizadas con auto-remediación.', 5: 'Orquestación completa: provisioning, scaling, failover y optimización de recursos son 100% automáticos.' } },
+  { type: 'scale', category: 'AUTO-CUANTIFICACIÓN', question: '¿Cuantificas tu PUE (Power Usage Effectiveness)?', key: 'P9', descriptions: { 1: 'No medimos ni conocemos nuestro PUE.', 2: 'Estimamos el PUE de forma aproximada, sin medición formal.', 3: 'Medimos el PUE periódicamente (mensual o trimestral) con datos parciales.', 4: 'Medimos el PUE continuamente y lo comparamos con benchmarks de la industria.', 5: 'Medimos PUE en tiempo real por zona/sala, con metas de optimización activas y tracking de tendencias.' } },
+  { type: 'scale', category: 'AUTO-CUANTIFICACIÓN', question: '¿Sabes exactamente tu utilización real?', key: 'P10', descriptions: { 1: 'No medimos la utilización; desconocemos cuánta capacidad se usa realmente.', 2: 'Tenemos una idea general pero sin datos concretos ni métricas formales.', 3: 'Medimos utilización de CPU/memoria a nivel general, pero no identificamos capacidad desperdiciada.', 4: 'Medimos utilización por servidor/rack y conocemos nuestra capacidad ociosa.', 5: 'Medición granular en tiempo real con identificación precisa de stranded capacity y costos asociados.' } },
+  { type: 'scale', category: 'BLOQUEANTES', question: '¿Tienes suficiente personal calificado?', key: 'P11', descriptions: { 1: 'Déficit crítico; no cubrimos las necesidades mínimas de operación.', 2: 'Personal insuficiente; dependemos de contratistas externos para operaciones básicas.', 3: 'Personal suficiente para operaciones normales, pero sin capacidad para proyectos de mejora.', 4: 'Personal adecuado con capacidad para operaciones y algunos proyectos de innovación.', 5: 'Equipo completo y especializado, con capacidad para operar, innovar y formar talento.' } },
+  { type: 'scale', category: 'BLOQUEANTES', question: '¿Hay retrasos en cadena de suministro?', key: 'P12', descriptions: { 1: 'Retrasos severos (+6 meses); afectan la operación y expansión frecuentemente.', 2: 'Retrasos significativos (3-6 meses); impactan la planificación de capacidad.', 3: 'Retrasos moderados (1-3 meses); manejables pero requieren planificación anticipada.', 4: 'Retrasos menores (<1 mes); rara vez impactan las operaciones.', 5: 'Sin retrasos relevantes; cadena de suministro diversificada y con stock de respaldo.' } },
+  { type: 'scale', category: 'BLOQUEANTES', question: '¿Hay restricciones de la red eléctrica?', key: 'P13', descriptions: { 1: 'Restricciones severas; la red limita la operación actual y no hay alternativas.', 2: 'Restricciones significativas; hay cortes frecuentes o límites de capacidad cercanos.', 3: 'Restricciones moderadas; la red es estable pero sin margen para crecimiento.', 4: 'Pocas restricciones; red estable con margen de crecimiento razonable.', 5: 'Sin restricciones; red eléctrica confiable con capacidad amplia y/o fuentes renovables propias.' } },
+  { type: 'scale', category: 'BLOQUEANTES', question: '¿Hay restricciones regulatorias?', key: 'P14', descriptions: { 1: 'Restricciones severas que bloquean expansión o requieren cambios operativos mayores.', 2: 'Restricciones significativas que limitan opciones de crecimiento o tecnología.', 3: 'Restricciones moderadas; cumplimos la normativa pero limita algunas decisiones.', 4: 'Pocas restricciones; la regulación es clara y no impide nuestros planes.', 5: 'Entorno regulatorio favorable; las normativas apoyan nuestra operación y expansión.' } },
+  { type: 'scale', category: 'EXPERTISE INTERNA', question: '¿Tienes expertise interna?', key: 'P15', descriptions: { 1: 'No hay expertise especializado; dependemos completamente de proveedores externos.', 2: 'Expertise básico; el equipo maneja operaciones rutinarias pero no puede resolver problemas complejos.', 3: 'Expertise moderado; el equipo resuelve la mayoría de problemas pero necesita apoyo externo para temas avanzados.', 4: 'Expertise sólido; el equipo maneja temas avanzados con apoyo externo solo en casos excepcionales.', 5: 'Expertise completo; el equipo lidera innovación, capacita a otros y no depende de apoyo externo.' } }
 ];
 
-let currentStepIndex = 0;
+let currentStepIndex = -1;
 const userAnswers = {};
-
+let currentTheme = localStorage.getItem('benchmarkTheme') || 'light';
 const stepCounterEl = document.getElementById('stepCounter');
 const progressBarContainer = document.getElementById('progressBarContainer');
 const cardContainer = document.getElementById('cardContainer');
 
 function initApp() {
-  renderProgressBar();
+  applyTheme(currentTheme);
+  setupThemeButtons();
   renderStep();
+}
+
+function setupThemeButtons() {
+  const lightBtn = document.getElementById('themeBtnLight');
+  const darkBtn = document.getElementById('themeBtnDark');
+  if (lightBtn) lightBtn.onclick = () => setTheme('light');
+  if (darkBtn) darkBtn.onclick = () => setTheme('dark');
+}
+
+function setTheme(theme) {
+  currentTheme = theme;
+  localStorage.setItem('benchmarkTheme', theme);
+  applyTheme(theme);
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
 }
 
 function renderProgressBar() {
   progressBarContainer.innerHTML = '';
-  for (let i = 0; i < 14; i++) {
+  if (currentStepIndex < 0) return;
+
+  for (let i = 0; i < 15; i++) {
     const seg = document.createElement('div');
     seg.className = `progress-segment ${i <= currentStepIndex ? 'active' : ''}`;
     progressBarContainer.appendChild(seg);
   }
 }
 
+function renderIntro() {
+  cardContainer.innerHTML = `
+    <div class="intro-layout">
+      <div class="intro-card">
+        <div class="intro-visual">
+          <div class="orb orb-one"></div>
+          <div class="orb orb-two"></div>
+          <div class="mini-board">
+            <span>Estado</span>
+            <div class="mini-bars">
+              <i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="intro-content">
+          <div class="brand-title">BENCHMARK<span class="dot">•</span>DC</div>
+          <div class="intro-kicker">MOTOR DE BENCHMARK • DATA CENTERS</div>
+
+          <h1 class="intro-title">¿Cuánta capacidad estás pagando sin usar?</h1>
+
+          <p class="intro-text">
+            Este diagnóstico mide qué tan coordinadas están las capas de energía, cooling y workloads en tu facility.
+            A cambio de tus respuestas, recibes tu posición relativa frente al resto de la industria — un dato que hoy
+            no existe en ningún otro lugar.
+          </p>
+
+          <div class="meta-list">
+            <div class="meta-pill">15 preguntas</div>
+            <div class="meta-pill">~8 minutos</div>
+            <div class="meta-pill">5 dimensiones</div>
+          </div>
+
+          <div class="security-row">🔒 ANONIMATO GARANTIZADO</div>
+
+          <p class="privacy-copy">
+            No te pedimos tu nombre, tu empresa, ni ningún dato que te identifique...
+          </p>
+
+          <label class="consent-row">
+            <input type="checkbox" id="consentCheck" />
+            <span>Entiendo que este diagnóstico es anónimo y acepto participar.</span>
+          </label>
+
+          <div class="cta-row">
+            <button class="cta-button" onclick="startBenchmark()">Comenzar diagnóstico →</button>
+          </div>
+
+          <div class="mini-meta">DIAGNÓSTICO ANÓNIMO • ~8 MIN</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function startBenchmark() {
+  const consent = document.getElementById('consentCheck');
+  if (!consent || consent.checked) {
+    currentStepIndex = 0;
+    renderStep();
+  }
+}
+
 function renderStep() {
   renderProgressBar();
-  
+
+  if (currentStepIndex === -1) {
+    if (stepCounterEl) stepCounterEl.textContent = '';
+    renderIntro();
+    return;
+  }
+
   if (currentStepIndex >= stepsData.length) {
     renderResults();
     return;
   }
 
   const stepNum = String(currentStepIndex + 1).padStart(2, '0');
-  stepCounterEl.textContent = `PASO ${stepNum} / 14`;
+  if (stepCounterEl) stepCounterEl.textContent = `PASO ${stepNum} / 15`;
 
   const data = stepsData[currentStepIndex];
-
-  if (data.type === 'context') {
-    renderContextStep(data);
-  } else {
-    renderScaleStep(data);
-  }
-}
-
-function renderContextStep(data) {
-  const selectedVal = userAnswers[data.key] || '';
-
-  cardContainer.innerHTML = `
-    <div>
-      <div class="category-tag">${data.category}</div>
-      <h2 class="question-title">${data.question}</h2>
-      <div class="options-pills">
-        ${data.options.map(opt => `
-          <button class="pill-btn ${selectedVal === opt ? 'selected' : ''}" onclick="selectContextOption('${data.key}', '${opt}')">
-            ${opt}
-          </button>
-        `).join('')}
-      </div>
-    </div>
-    <div class="nav-buttons">
-      <button class="btn-back" onclick="prevStep()" ${currentStepIndex === 0 ? 'disabled style="opacity:0.3"' : ''}>← Atrás</button>
-      <button class="btn-next" id="btnNext" onclick="nextStep()" ${!selectedVal ? 'disabled' : ''}>Siguiente →</button>
-    </div>
-  `;
+  renderScaleStep(data);
 }
 
 function renderScaleStep(data) {
@@ -221,33 +146,26 @@ function renderScaleStep(data) {
   const descText = selectedVal ? data.descriptions[selectedVal] : 'Selecciona una opción del 1 al 5';
 
   cardContainer.innerHTML = `
-    <div>
+    <div class="question-shell">
       <div class="category-tag">${data.category}</div>
       <h2 class="question-title">${data.question}</h2>
-      
+
       <div class="scale-container">
         ${[1, 2, 3, 4, 5].map(num => `
-          <div class="scale-box ${selectedVal === num ? 'selected' : ''}" onclick="selectScaleOption('${data.key}', ${num})">
+          <button class="scale-box ${selectedVal === num ? 'selected' : ''}" onclick="selectScaleOption('${data.key}', ${num})">
             ${num}
-          </div>
+          </button>
         `).join('')}
       </div>
 
-      <div class="description-box" id="descBox">
-        ${descText}
+      <div class="description-box" id="descBox">${descText}</div>
+
+      <div class="nav-buttons">
+        <button class="btn-back" onclick="prevStep()">← Atrás</button>
+        <button class="btn-next" onclick="nextStep()" ${!selectedVal ? 'disabled' : ''}>Siguiente →</button>
       </div>
     </div>
-
-    <div class="nav-buttons">
-      <button class="btn-back" onclick="prevStep()">← Atrás</button>
-      <button class="btn-next" id="btnNext" onclick="nextStep()" ${!selectedVal ? 'disabled' : ''}>Siguiente →</button>
-    </div>
   `;
-}
-
-function selectContextOption(key, value) {
-  userAnswers[key] = value;
-  renderStep();
 }
 
 function selectScaleOption(key, value) {
@@ -256,7 +174,9 @@ function selectScaleOption(key, value) {
 }
 
 function nextStep() {
-  if (currentStepIndex < stepsData.length) {
+  if (currentStepIndex >= 0 && currentStepIndex < stepsData.length) {
+    const data = stepsData[currentStepIndex];
+    if (!userAnswers[data.key]) return;
     currentStepIndex++;
     renderStep();
   }
@@ -269,114 +189,123 @@ function prevStep() {
   }
 }
 
-function renderResults() {
-  stepCounterEl.textContent = 'PASO 14 / 14';
-
-  const p2 = userAnswers['P2'] || 3;
-  const p4 = userAnswers['P4'] || 2;
-  const p6 = userAnswers['P6'] || 4;
-  const p9 = userAnswers['P9'] || 4;
-  const p11 = userAnswers['P11'] || 4;
-
-  const visPctl = Math.round((p2 / 5) * 100);
-  const fricPctl = Math.round((p4 / 5) * 100);
-  const latPctl = Math.round((p6 / 5) * 100);
-  const quantPctl = Math.round((p9 / 5) * 100);
-  const blockPctl = Math.round((p11 / 5) * 100);
-
-  const overallPctl = Math.round((visPctl + fricPctl + latPctl + quantPctl + blockPctl) / 5);
-
-  const dims = [
-    { name: 'Visibilidad cross-layer', val: visPctl },
-    { name: 'Atribución de fricción', val: fricPctl },
-    { name: 'Latencia de coordinación', val: latPctl },
-    { name: 'Auto-cuantificación', val: quantPctl },
-    { name: 'Bloqueantes', val: blockPctl }
+function getScoreSummary() {
+  const groups = [
+    { name: 'Visibilidad', keys: ['P1', 'P2', 'P3'] },
+    { name: 'Fricción', keys: ['P4', 'P5'] },
+    { name: 'Coordinación', keys: ['P6', 'P7', 'P8'] },
+    { name: 'Cuantificación', keys: ['P9', 'P10'] },
+    { name: 'Bloqueantes', keys: ['P11', 'P12', 'P13', 'P14'] },
+    { name: 'Expertise', keys: ['P15'] }
   ];
 
-  dims.sort((a, b) => a.val - b.val);
-  const weakest = dims[0];
+  const values = groups.map(group => {
+    const sum = group.keys.reduce((acc, key) => acc + (Number(userAnswers[key]) || 0), 0);
+    const avg = (sum / group.keys.length) * 20;
+    return { ...group, value: avg };
+  });
+
+  const finalScore = Math.round(values.reduce((acc, item) => acc + item.value, 0) / values.length);
+  const weakest = [...values].sort((a, b) => a.value - b.value)[0];
+
+  return { values, finalScore, weakest };
+}
+
+function renderResults() {
+  const { values, finalScore, weakest } = getScoreSummary();
+  const summaryBars = values.map(item => `
+    <div class="bar-row">
+      <div class="bar-label">${item.name}</div>
+      <div class="bar-track"><span class="bar-fill" style="width:${Math.min(item.value, 100)}%"></span></div>
+      <div class="bar-value">${Math.round(item.value)}%</div>
+    </div>
+  `).join('');
+
+  const answers = [
+    { label: 'P1: ¿Tienes herramientas para monitorear energía, cooling y workloads?', value: userAnswers.P1 || 'No respondido' },
+    { label: 'P2: ¿Tienes dashboards que unifiquen las 3 capas?', value: userAnswers.P2 || 'No respondido' },
+    { label: 'P3: ¿Qué tan detallada es tu telemetría?', value: userAnswers.P3 || 'No respondido' },
+    { label: 'P4: ¿Qué tan sincronizados están energía y workload?', value: userAnswers.P4 || 'No respondido' },
+    { label: 'P5: ¿Qué tan sincronizados están cooling y workload?', value: userAnswers.P5 || 'No respondido' },
+    { label: 'P6: ¿Cuánto tarda la coordinación MANUAL entre teams?', value: userAnswers.P6 || 'No respondido' },
+    { label: 'P7: ¿Tienes semi-automatización?', value: userAnswers.P7 || 'No respondido' },
+    { label: 'P8: ¿Tienes automatización completa?', value: userAnswers.P8 || 'No respondido' },
+    { label: 'P9: ¿Cuantificas tu PUE (Power Usage Effectiveness)?', value: userAnswers.P9 || 'No respondido' },
+    { label: 'P10: ¿Sabes exactamente tu utilización real?', value: userAnswers.P10 || 'No respondido' },
+    { label: 'P11: ¿Tienes suficiente personal calificado?', value: userAnswers.P11 || 'No respondido' },
+    { label: 'P12: ¿Hay retrasos en cadena de suministro?', value: userAnswers.P12 || 'No respondido' },
+    { label: 'P13: ¿Hay restricciones de la red eléctrica?', value: userAnswers.P13 || 'No respondido' },
+    { label: 'P14: ¿Hay restricciones regulatorias?', value: userAnswers.P14 || 'No respondido' },
+    { label: 'P15: ¿Tienes expertise interna?', value: userAnswers.P15 || 'No respondido' }
+  ];
+
+  const answerRows = answers.map(item => `
+    <div class="answer-row">
+      <div class="answer-label">${item.label}</div>
+      <div class="answer-value">${item.value}</div>
+    </div>
+  `).join('');
 
   cardContainer.innerHTML = `
-    <div>
-      <div class="results-header">
-        <div class="results-subtitle">TU RESULTADO</div>
-        <h1 class="results-title">Posición relativa en la industria</h1>
-      </div>
-
-      <div class="gauge-wrapper">
-        <svg class="gauge-svg" viewBox="0 0 100 55">
-          <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#1e293b" stroke-width="8" stroke-linecap="round"/>
-          <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="url(#gaugeGrad)" stroke-width="8" stroke-linecap="round"
-                stroke-dasharray="125.6" stroke-dashoffset="${125.6 * (1 - overallPctl / 100)}"/>
-          <defs>
-            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#f59e0b" />
-              <stop offset="50%" stop-color="#2dd4bf" />
-              <stop offset="100%" stop-color="#34d399" />
-            </linearGradient>
-          </defs>
-        </svg>
-        <div class="gauge-value">
-          <div class="gauge-score">P${overallPctl}</div>
-          <div class="gauge-label">PERCENTIL GENERAL</div>
-        </div>
-      </div>
-
-      <div class="metric-card">
+    <div class="results-shell">
+      <div class="results-header-row">
         <div>
-          <div class="metric-title">PUE calculado (vs. promedio industria 1.54)</div>
-          <div class="metric-val">1.00</div>
+          <div class="results-kicker">RESULTADOS</div>
+          <h1 class="results-title">¡Gracias por completar el diagnóstico!</h1>
         </div>
-        <div class="metric-pctl">Percentil P90</div>
+        <div class="score-pill">Score ${finalScore}/100</div>
       </div>
 
-      <div class="dimensions-list">
-        <div class="dim-row">
-          <span class="dim-label ${visPctl === weakest.val ? 'highlight' : ''}">Visibilidad cross-layer</span>
-          <div class="dim-bar-bg"><div class="dim-bar-fill" style="width: ${visPctl}%"></div></div>
-          <span class="dim-val">P${visPctl}</span>
+      <div class="results-grid">
+        <div class="score-panel">
+          <div class="score-ring" style="--score: ${finalScore};">
+            <div class="score-ring-inner">
+              <strong>${finalScore}%</strong>
+              <span>SCORE</span>
+            </div>
+          </div>
         </div>
-        <div class="dim-row">
-          <span class="dim-label ${weakest.name === 'Atribución de fricción' ? 'highlight' : ''}">Atribución de fricción</span>
-          <div class="dim-bar-bg"><div class="dim-bar-fill ${weakest.name === 'Atribución de fricción' ? 'weakness' : ''}" style="width: ${fricPctl}%"></div></div>
-          <span class="dim-val">P${fricPctl}</span>
-        </div>
-        <div class="dim-row">
-          <span class="dim-label">Latencia de coordinación</span>
-          <div class="dim-bar-bg"><div class="dim-bar-fill" style="width: ${latPctl}%"></div></div>
-          <span class="dim-val">P${latPctl}</span>
-        </div>
-        <div class="dim-row">
-          <span class="dim-label">Auto-cuantificación</span>
-          <div class="dim-bar-bg"><div class="dim-bar-fill" style="width: ${quantPctl}%"></div></div>
-          <span class="dim-val">P${quantPctl}</span>
-        </div>
-        <div class="dim-row">
-          <span class="dim-label">Bloqueantes</span>
-          <div class="dim-bar-bg"><div class="dim-bar-fill" style="width: ${blockPctl}%"></div></div>
-          <span class="dim-val">P${blockPctl}</span>
+
+        <div class="stats-panel">
+          <div class="stat-box accent-green">
+            <small>Madurez</small>
+            <strong>${finalScore}%</strong>
+          </div>
+          <div class="stat-box accent-cyan">
+            <small>Data center</small>
+            <strong>Facility</strong>
+          </div>
+          <div class="stat-box accent-gold">
+            <small>Mayor fricción</small>
+            <strong>${weakest.name}</strong>
+          </div>
         </div>
       </div>
 
-      <div class="insight-card warning">
-        <div class="insight-tag">⚠️ TU MAYOR FRICCIÓN</div>
-        Tu punto más débil relativo es <strong>${weakest.name}</strong> — estás en el percentil ${weakest.val} de la industria en esa dimensión.
+      <div class="panel-block">
+        <h3>Perfil por dimensión</h3>
+        <div class="bars-panel">${summaryBars}</div>
       </div>
 
-      <div class="insight-card success">
-        <div class="insight-tag">QUÉ HACE DISTINTO EL CUARTIL SUPERIOR</div>
-        Los operadores del cuartil superior tienen cuantificada, con datos, la interfaz exacta donde pierden capacidad — no dependen de intuición.
+      <div class="insight-banner">
+        <span>Insight clave</span>
+        Tu mayor fricción está en <strong>${weakest.name}</strong>. Eso es lo que más limita la capacidad operativa y la eficiencia del facility.
       </div>
+
+      <div class="panel-block">
+        <h3>Resumen de respuestas</h3>
+        <div class="answers-panel">${answerRows}</div>
+      </div>
+
+      <button class="restart-btn" onclick="restartBenchmark()">Volver al inicio</button>
+      <div class="mini-meta">DIAGNÓSTICO ANÓNIMO • ~8 MIN</div>
     </div>
-
-    <button class="restart-btn" onclick="restartBenchmark()">↺ Volver a empezar (demo)</button>
   `;
 }
 
 function restartBenchmark() {
-  currentStepIndex = 0;
-  for (let key in userAnswers) delete userAnswers[key];
+  currentStepIndex = -1;
+  for (const key in userAnswers) delete userAnswers[key];
   renderStep();
 }
 
