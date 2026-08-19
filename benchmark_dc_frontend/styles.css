@@ -899,6 +899,75 @@ button, input {
   color: var(--cyan);
 }
 
+/* --- POSICIÓN RELATIVA Y CUARTIL SUPERIOR --- */
+.percentile-panel,
+.quartile-panel {
+  background: rgba(255,255,255,0.25);
+}
+
+[data-theme="dark"] .percentile-panel,
+[data-theme="dark"] .quartile-panel {
+  background: rgba(30, 40, 55, 0.3);
+}
+
+.percentile-highlight {
+  font-size: 1.15rem;
+  margin: 4px 0 12px;
+  color: var(--text);
+}
+
+.percentile-highlight strong {
+  color: var(--cyan);
+  font-weight: 900;
+}
+
+.panel-copy {
+  color: var(--text-soft);
+  line-height: 1.6;
+  font-size: 0.98rem;
+}
+
+/* --- SELLO DE CERTIFICACIÓN --- */
+.seal-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 32px 0 12px;
+}
+
+.seal-badge {
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  border: 2px solid var(--green-1);
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(0, 188, 212, 0.1));
+  box-shadow: 0 12px 28px rgba(46, 204, 113, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.seal-badge strong {
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  font-weight: 900;
+}
+
+.seal-badge strong span {
+  color: var(--green-2);
+}
+
+.seal-badge small {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
 @media (max-width: 960px) {
   .intro-card {
     grid-template-columns: 1fr;

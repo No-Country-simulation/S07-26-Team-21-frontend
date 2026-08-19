@@ -144,6 +144,7 @@ function renderStep() {
 function renderScaleStep(data) {
   const selectedVal = userAnswers[data.key] || null;
   const descText = selectedVal ? data.descriptions[selectedVal] : 'Selecciona una opción del 1 al 5';
+  const isLastStep = currentStepIndex === stepsData.length - 1;
 
   cardContainer.innerHTML = `
     <div class="question-shell">
@@ -162,7 +163,7 @@ function renderScaleStep(data) {
 
       <div class="nav-buttons">
         <button class="btn-back" onclick="prevStep()">← Atrás</button>
-        <button class="btn-next" onclick="nextStep()" ${!selectedVal ? 'disabled' : ''}>Siguiente →</button>
+        <button class="btn-next" onclick="nextStep()" ${!selectedVal ? 'disabled' : ''}>${isLastStep ? 'Terminar diagnóstico ✓' : 'Siguiente →'}</button>
       </div>
     </div>
   `;
@@ -185,6 +186,9 @@ function nextStep() {
 function prevStep() {
   if (currentStepIndex > 0) {
     currentStepIndex--;
+    renderStep();
+  } else if (currentStepIndex === 0) {
+    currentStepIndex = -1;
     renderStep();
   }
 }
@@ -211,8 +215,57 @@ function getScoreSummary() {
   return { values, finalScore, weakest };
 }
 
+/* --- CÁLCULO DE PERCENTIL --- */
+function erf(x) {
+  const sign = x >= 0 ? 1 : -1;
+  x = Math.abs(x);
+  const a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741;
+  const a4 = -1.453152027, a5 = 1.061405429, p = 0.3275911;
+  const t = 1 / (1 + p * x);
+  const y = 1 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+  return sign * y;
+}
+
+function getPercentile(score) {
+  const mean = 55, stdDev = 18;
+  const z = (score - mean) / stdDev;
+  const cdf = 0.5 * (1 + erf(z / Math.sqrt(2)));
+  return Math.min(99, Math.max(1, Math.round(cdf * 100)));
+}
+
+/* --- PERFILES CUALITATIVOS POR DIMENSIÓN DE FRICCIÓN --- */
+const frictionProfiles = {
+  'Visibilidad': {
+    qualitative: 'Tu operación tiene puntos ciegos entre energía, cooling y workloads: las decisiones se toman con información parcial o desactualizada.',
+    topQuartile: 'Los operadores del cuartil superior integran telemetría de las 3 capas en un solo dashboard en tiempo real, anticipando problemas antes de que impacten la operación.'
+  },
+  'Fricción': {
+    qualitative: 'Energía y cooling no reaccionan a tiempo a los cambios de carga, generando ineficiencias y sobrecostos evitables.',
+    topQuartile: 'El cuartil superior sincroniza energía y cooling con los workloads de forma proactiva o automática, reduciendo el desperdicio de capacidad.'
+  },
+  'Coordinación': {
+    qualitative: 'La coordinación entre equipos es lenta y depende de procesos manuales, lo que retrasa la respuesta ante incidentes.',
+    topQuartile: 'Los mejores operadores automatizan la mayoría de sus procesos rutinarios y reservan la intervención humana solo para decisiones críticas.'
+  },
+  'Cuantificación': {
+    qualitative: 'No cuentas con métricas confiables de PUE ni de utilización real, lo que dificulta identificar capacidad desperdiciada.',
+    topQuartile: 'El cuartil superior mide PUE y utilización en tiempo real, con metas activas de optimización y seguimiento de tendencias.'
+  },
+  'Bloqueantes': {
+    qualitative: 'Factores externos como personal, cadena de suministro, red eléctrica o regulación están limitando tu capacidad de operar y crecer.',
+    topQuartile: 'Los operadores líderes diversifican proveedores, forman talento interno y anticipan restricciones regulatorias antes de que se conviertan en bloqueos.'
+  },
+  'Expertise': {
+    qualitative: 'Tu equipo depende en gran medida de apoyo externo para resolver problemas técnicos avanzados.',
+    topQuartile: 'El cuartil superior cuenta con expertise interno que no solo resuelve problemas, sino que lidera innovación y capacita al resto de la organización.'
+  }
+};
+
 function renderResults() {
   const { values, finalScore, weakest } = getScoreSummary();
+  const percentile = getPercentile(finalScore);
+  const profile = frictionProfiles[weakest.name];
+
   const summaryBars = values.map(item => `
     <div class="bar-row">
       <div class="bar-label">${item.name}</div>
@@ -290,6 +343,24 @@ function renderResults() {
       <div class="insight-banner">
         <span>Insight clave</span>
         Tu mayor fricción está en <strong>${weakest.name}</strong>. Eso es lo que más limita la capacidad operativa y la eficiencia del facility.
+      </div>
+
+      <div class="panel-block percentile-panel">
+        <h3>Tu posición relativa</h3>
+        <p class="percentile-highlight">Estás en el <strong>percentil ${percentile}</strong> frente a otros operadores evaluados.</p>
+        <p class="panel-copy">${profile.qualitative}</p>
+      </div>
+
+      <div class="panel-block quartile-panel">
+        <h3>¿Qué hace distinto el cuartil superior?</h3>
+        <p class="panel-copy">${profile.topQuartile}</p>
+      </div>
+
+      <div class="seal-wrapper">
+        <div class="seal-badge">
+          <strong>BENCHMARK<span>•</span>DC</strong>
+          <small>DIAGNÓSTICO<br/>CERTIFICADO</small>
+        </div>
       </div>
 
       <div class="panel-block">
